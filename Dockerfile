@@ -3,7 +3,7 @@ FROM ubuntu
 MAINTAINER ich777
 
 RUN apt-get update
-RUN apt-get -y install curl wget libjansson4 libzip4 libpng-tools
+RUN apt-get -y install curl wget libjansson4 libzip4 libpng-tools libicu60 libfreetype6 libfontconfig libsdl2-2.0-0 libspeexdsp-dev
 
 ENV DATA_DIR="/serverdata"
 ENV SERVER_DIR="${DATA_DIR}/serverfiles"
