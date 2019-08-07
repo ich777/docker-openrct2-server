@@ -1,49 +1,86 @@
 #!/bin/bash
-CUR_V="$(find -name teeworlds[^extended]*\.tar\.gz | cut -d '-' -f 2)"
-LAT_V="$(curl -s https://api.github.com/repos/teeworlds/teeworlds/releases/latest | grep tag_name | cut -d '"' -f4)"
+CUR_V="$(find ${SERVER_DIR} -name openrct2installedv* | cut -d 'v' -f4)"
+LAT_V="$(curl -s https://api.github.com/repos/OpenRCT2/OpenRCT2/releases/latest | grep tag_name | cut -d '"' -f4)"
 
-https://api.github.com/repos/OpenRCT2/OpenRCT2/releases
-https://github.com/OpenRCT2/OpenRCT2/releases/download/v0.2.2/OpenRCT2-0.2.2-linux-x86_64.tar.gz
-OpenRCT2-0.2.0-linux-x86_64.tar.gz
+echo "---sleep zZz---"
+sleep infinity
 
 if [ -z "$CUR_V" ]; then
    echo "---OpenRCT2 not found!---"
    cd ${SERVER_DIR}
-   curl -s https://api.github.com/repos/OpenRCT2/OpenRCT2/releases/latest \
-   | grep "browser_download_url.*teeworlds-[^extended].*-linux_x86_64\.tar\.gz" \
+   curl -s https://api.github.com/repos/OpenRCT2/OpenRCT2/releases \
+   | grep "browser_download_url.*OpenRCT2-${GAME_VERSION}-linux_x86_64\.tar\.gz" \
    | cut -d ":" -f 2,3 \
    | cut -d '"' -f2 \
    | wget -qi -
-   tar --directory ${SERVER_DIR} -xvzf /serverdata/serverfiles/teeworlds-$LAT_V-linux_x86_64.tar.gz
-   mv ${SERVER_DIR}/teeworlds-$LAT_V-linux_x86_64 ${SERVER_DIR}/teeworlds  
-elif [ "$LAT_V" != "$CUR_V" ]; then
-   echo "---Newer version found, installing!---"
-   rm ${SERVER_DIR}/teeworlds-$CUR_V-linux_x86_64.tar.gz
+	if [ ! -s ${SERVER_DIR}/OpenRCT2-${GAME_VERSION}-linux_x86_64.tar.gz ]; then
+		echo "---You've probably entered a wrong version number the server tar.gz is empty---"
+		rm OpenRCT2-${GAME_VERSION}-linux_x86_64.tar.gz
+		sleep infinity
+	fi
+   tar --directory ${SERVER_DIR} -xvzf /serverdata/serverfiles/OpenRCT2-${GAME_VERSION}-linux-x86_64.tar.gz
+   rm ${SERVER_DIR}/OpenRCT2-${GAME_VERSION}-linux-x86_64.tar.gz
+   touch ${SERVER_DIR}/openrct2installedv${GAME_VERSION}
+	if [ "$LAT_V" != "$CUR_V" ]; then
+		echo "-----------------------------------------"
+		echo "---Newer version of OpenRCT2 available---"
+        echo "---Installed version: $CUR_V ------------"
+        echo "---Available version: $LAT_V ------------"
+        echo "-----------------------------------------"
+    	sleep 5
+    fi
+elif [ "${GAME_V}" != "$CUR_V" ]; then
+   echo "---Version missmatch, installing v${GAME_VERSION}!---"
+   rm ${SERVER_DIR}/openrct2installedv$CUR_V
    cd ${SERVER_DIR}
-   curl -s https://api.github.com/repos/OpenRCT2/OpenRCT2/releases/latest \
-   | grep "browser_download_url.*teeworlds-[^extended].*-linux_x86_64\.tar\.gz" \
+   curl -s https://api.github.com/repos/OpenRCT2/OpenRCT2/releases \
+   | grep "browser_download_url.*OpenRCT2-${GAME_VERSION}-linux_x86_64\.tar\.gz" \
    | cut -d ":" -f 2,3 \
    | cut -d '"' -f2 \
    | wget -qi -
-   tar --directory ${SERVER_DIR} -xvzf /serverdata/serverfiles/teeworlds-$LAT_V-linux_x86_64.tar.gz
-   mv ${SERVER_DIR}/teeworlds-$LAT_V-linux_x86_64 ${SERVER_DIR}/teeworlds
-elif [ "$LAT_V" == "$CUR_V" ]; then
-   echo "---Teeworlds Version up-to-date---"
+	if [ ! -s ${SERVER_DIR}/OpenRCT2-${GAME_VERSION}-linux_x86_64.tar.gz ]; then
+		echo "---You've probably entered a wrong version number the server tar.gz is empty---"
+		rm OpenRCT2-${GAME_VERSION}-linux_x86_64.tar.gz
+		sleep infinity
+	fi
+   tar --directory ${SERVER_DIR} -xvzf /serverdata/serverfilesOpenRCT2-${GAME_VERSION}-linux-x86_64.tar.gz
+   rm ${SERVER_DIR}/OpenRCT2-${GAME_VERSION}-linux-x86_64.tar.gz
+   touch ${SERVER_DIR}/openrct2installedv${GAME_VERSION}
+	if [ "$LAT_V" != "$CUR_V" ]; then
+		echo "-----------------------------------------"
+		echo "---Newer version of OpenRCT2 available---"
+        echo "---Installed version: $CUR_V ------------"
+        echo "---Available version: $LAT_V ------------"
+        echo "-----------------------------------------"
+    	sleep 5
+    fi
+elif [ "${GAME_VERSION}" == "$CUR_V" ]; then
+   echo "---OpenRCT2 version matches installed version---"
+   if [ "$LAT_V" != "$CUR_V" ]; then
+		echo "-----------------------------------------"
+		echo "---Newer version of OpenRCT2 available---"
+        echo "---Installed version: $CUR_V ------------"
+        echo "---Available version: $LAT_V ------------"
+        echo "-----------------------------------------"
+    	sleep 5
+    fi
 else
    echo "---Something went wrong, putting server in sleep mode---"
    sleep infinity
 fi
 
 echo "---Preparing Server---"
-if [ ! -f ${SERVER_DIR}/teeworlds/autoexec.cfg ]; then
-   cd ${SERVER_DIR}/teeworlds
-   wget -qi https://raw.githubusercontent.com/ich777/docker-teeworlds-server/master/configs/autoexec.cfg
-   wget -qi https://raw.githubusercontent.com/ich777/docker-teeworlds-server/master/configs/ctf.cfg
-   wget -qi https://raw.githubusercontent.com/ich777/docker-teeworlds-server/master/configs/dm.cfg
-   wget -qi https://raw.githubusercontent.com/ich777/docker-teeworlds-server/master/configs/tdm.cfg
-fi
 chmod -R 770 ${DATA_DIR}
+SAVE_PRES="$(find ${SERVER_DIR}/saves -name *.sav | cut -d '.' -f5)"
+if [ -z "$SAVE_PRES" ]; then
+	echo "---No Savegame found, downloading---"
+    if [ -d ${SERVER_DIR}/saves ]; then
+    	mkdir ${SERVER_DIR}/saves
+    fi
+    cd ${SERVER_DIR}/saves
+    wget -qi https://raw.githubusercontent.com/ich777/docker-openrct2-server/master/saves/docker.sav
+fi
 
 echo "---Starting Server---"
-cd ${SERVER_DIR}/teeworlds
-./teeworlds_srv -f ${GAME_CONFIG}
+cd ${SERVER_DIR}
+${SERVER_DIR}/openrct2-cli host ${SERVER_DIR}/saves/${GAME_SAVE_NAME} --port ${GAME_PORT} --headless ${GAME_CONFIG}
