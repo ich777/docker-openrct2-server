@@ -78,7 +78,6 @@ else
 fi
 
 echo "---Preparing Server---"
-chmod -R 770 ${DATA_DIR}
 if [ ! -d ${SERVER_DIR}/saves ]; then
 	mkdir ${SERVER_DIR}/saves
 fi
@@ -86,8 +85,9 @@ SAVE_PRES="$(find ${SERVER_DIR}/saves -name *.sv6 | cut -d '.' -f5)"
 if [ -z "$SAVE_PRES" ]; then
 	echo "---No Savegame found, downloading---"
     cd ${SERVER_DIR}/saves
-    wget -qi https://raw.githubusercontent.com/ich777/docker-openrct2-server/master/saves/docker.sv6
+    wget -qi - https://raw.githubusercontent.com/ich777/docker-openrct2-server/master/saves/docker.sv6
 fi
+chmod -R 770 ${DATA_DIR}
 
 echo "---Starting Server---"
 cd ${SERVER_DIR}
