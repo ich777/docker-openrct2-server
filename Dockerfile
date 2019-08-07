@@ -14,16 +14,16 @@ ENV GID=100
 
 RUN mkdir $DATA_DIR
 RUN mkdir $SERVER_DIR
-RUN useradd -d $DATA_DIR -s /bin/bash --uid $UID --gid $GID teeworlds
-RUN chown -R teeworlds $DATA_DIR
+RUN useradd -d $DATA_DIR -s /bin/bash --uid $UID --gid $GID openrct2
+RUN chown -R openrct2 $DATA_DIR
 
 RUN ulimit -n 2048
 
 ADD /scripts/ /opt/scripts/
 RUN chmod -R 770 /opt/scripts/
-RUN chown -R teeworlds /opt/scripts
+RUN chown -R openrct2 /opt/scripts
 
-USER teeworlds
+USER openrct2
 
 #Server Start
 ENTRYPOINT ["/opt/scripts/start-server.sh"]
