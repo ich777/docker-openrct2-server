@@ -3,9 +3,11 @@ CUR_V="$(find -name teeworlds[^extended]*\.tar\.gz | cut -d '-' -f 2)"
 LAT_V="$(curl -s https://api.github.com/repos/teeworlds/teeworlds/releases/latest | grep tag_name | cut -d '"' -f4)"
 
 https://api.github.com/repos/OpenRCT2/OpenRCT2/releases
+https://github.com/OpenRCT2/OpenRCT2/releases/download/v0.2.2/OpenRCT2-0.2.2-linux-x86_64.tar.gz
+OpenRCT2-0.2.0-linux-x86_64.tar.gz
 
 if [ -z "$CUR_V" ]; then
-   echo "---Teeworlds not found!---"
+   echo "---OpenRCT2 not found!---"
    cd ${SERVER_DIR}
    curl -s https://api.github.com/repos/OpenRCT2/OpenRCT2/releases/latest \
    | grep "browser_download_url.*teeworlds-[^extended].*-linux_x86_64\.tar\.gz" \
