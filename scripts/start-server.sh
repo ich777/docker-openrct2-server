@@ -85,7 +85,6 @@ fi
 SAVE_PRES="$(find ${SERVER_DIR}/saves -name *.sv6 | cut -d '.' -f5)"
 if [ -z "$SAVE_PRES" ]; then
 	echo "---No Savegame found, downloading---"
-
     cd ${SERVER_DIR}/saves
     wget -qi https://raw.githubusercontent.com/ich777/docker-openrct2-server/master/saves/docker.sv6
 fi
