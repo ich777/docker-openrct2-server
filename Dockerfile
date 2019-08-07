@@ -7,8 +7,10 @@ RUN apt-get -y install curl wget
 
 ENV DATA_DIR="/serverdata"
 ENV SERVER_DIR="${DATA_DIR}/serverfiles"
+ENV GAME_VERSION=0.2.2
 ENV GAME_CONFIG="template"
-ENV GAME_PORT=8303
+ENV GAME_PORT=11753
+ENV GAME_SAVE_NAME="docker.sav"
 ENV UID=99
 ENV GID=100
 
