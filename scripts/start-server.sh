@@ -23,7 +23,7 @@ if [ ! -z $MANUAL ]; then
     fi
 else
   if [ -z "$CUR_V" ]; then
-     echo "---OpenRCT2 not found!---"
+     echo "---OpenRCT2 not found, downloading!---"
      cd ${SERVER_DIR}
      curl -s https://api.github.com/repos/OpenRCT2/OpenRCT2/releases \
      | grep "browser_download_url.*OpenRCT2-${GAME_VERSION}-linux-x86_64.tar.gz" \
