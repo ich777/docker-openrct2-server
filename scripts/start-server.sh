@@ -91,4 +91,4 @@ chmod -R 770 ${DATA_DIR}
 
 echo "---Starting Server---"
 cd ${SERVER_DIR}
-${SERVER_DIR}/openrct2-cli host ${SERVER_DIR}/saves/${GAME_SAVE_NAME} --port ${GAME_PORT} --headless ${GAME_CONFIG}
+${SERVER_DIR}/openrct2-cli host ${SERVER_DIR}/saves/${GAME_SAVE_NAME} --port ${GAME_PORT} ${GAME_CONFIG}
