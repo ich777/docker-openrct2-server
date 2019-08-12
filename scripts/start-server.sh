@@ -1,80 +1,98 @@
 #!/bin/bash
 CUR_V="$(find ${SERVER_DIR} -name openrct2installedv* | cut -d 'v' -f4)"
 LAT_V="$(curl -s https://api.github.com/repos/OpenRCT2/OpenRCT2/releases/latest | grep tag_name | cut -d '"' -f4 | cut -d 'v' -f2)"
+MANUAL="$(find ${SERVER_DIR} -name OpenRCT*-linux-x86_64.tar.gz | cut -d '/' -f4)"
+MAN_V="$(find ${SERVER_DIR} -name OpenRCT*-linux-x86_64.tar.gz | cut -d '-' -f2)"
 
-echo "---sleep zZz---"
-sleep infinity
-
-if [ -z "$CUR_V" ]; then
-   echo "---OpenRCT2 not found!---"
-   cd ${SERVER_DIR}
-   curl -s https://api.github.com/repos/OpenRCT2/OpenRCT2/releases \
-   | grep "browser_download_url.*OpenRCT2-${GAME_VERSION}-linux-x86_64.tar.gz" \
-   | cut -d ":" -f 2,3 \
-   | cut -d '"' -f2 \
-   | wget -qi -
-	if [ ! -s ${SERVER_DIR}/OpenRCT2-${GAME_VERSION}-linux-x86_64.tar.gz ]; then
-		echo "---You've probably entered a wrong version number the server tar.gz is empty---"
-		rm OpenRCT2-${GAME_VERSION}-linux-x86_64.tar.gz
-		sleep infinity
-	fi
-   tar --directory ${SERVER_DIR} -xvzf /serverdata/serverfiles/OpenRCT2-${GAME_VERSION}-linux-x86_64.tar.gz
-   cd OpenRCT2
-   cp -R -f ${SERVER_DIR}/OpenRCT2/* ${SERVER_DIR}
-   cd ${SERVER_DIR}
-   rm ${SERVER_DIR}/OpenRCT2-${GAME_VERSION}-linux-x86_64.tar.gz
-   rm -R ${SERVER_DIR}/OpenRCT2
-   touch ${SERVER_DIR}/openrct2installedv${GAME_VERSION}
-	if [ "$LAT_V" != "$CUR_V" ]; then
-		echo "-----------------------------------------"
-		echo "---Newer version of OpenRCT2 available---"
-        echo "---Installed version: $CUR_V ------------"
+if [ ! -z $MANUAL ]; then
+	echo "---Manual placed OpenRCT2 file found, installing---"
+    tar --directory ${SERVER_DIR} -xvzf /serverdata/serverfiles/$MANUAL
+    cd ${SERVER_DIR}/OpenRCT2
+    cp -R -f ${SERVER_DIR}/OpenRCT2/* ${SERVER_DIR}
+    cd ${SERVER_DIR}
+    rm ${SERVER_DIR}/$MANUAL
+    rm -R ${SERVER_DIR}/OpenRCT2
+    touch ${SERVER_DIR}/openrct2installedv$MAN_V
+    if [ "$LAT_V" != "$MAN_V" ]; then
+        echo "-----------------------------------------"
+        echo "---Newer version of OpenRCT2 available---"
+        echo "---Installed version: $MAN_V ------------"
         echo "---Available version: $LAT_V ------------"
         echo "-----------------------------------------"
-    	sleep 5
-    fi
-elif [ "${GAME_V}" != "$CUR_V" ]; then
-   echo "---Version missmatch, installing v${GAME_VERSION}!---"
-   rm ${SERVER_DIR}/openrct2installedv$CUR_V
-   cd ${SERVER_DIR}
-   curl -s https://api.github.com/repos/OpenRCT2/OpenRCT2/releases \
-   | grep "browser_download_url.*OpenRCT2-${GAME_VERSION}-linux-x86_64\.tar\.gz" \
-   | cut -d ":" -f 2,3 \
-   | cut -d '"' -f2 \
-   | wget -qi -
-	if [ ! -s ${SERVER_DIR}/OpenRCT2-${GAME_VERSION}-linux-x86_64.tar.gz ]; then
-		echo "---You've probably entered a wrong version number the server tar.gz is empty---"
-		rm OpenRCT2-${GAME_VERSION}-linux-x86_64.tar.gz
-		sleep infinity
-	fi
-   tar --directory ${SERVER_DIR} -xvzf /serverdata/serverfilesOpenRCT2-${GAME_VERSION}-linux-x86_64.tar.gz
-   cd OpenRCT2
-   cp -R -f ${SERVER_DIR}/OpenRCT2/* ${SERVER_DIR}
-   cd ${SERVER_DIR}
-   rm ${SERVER_DIR}/OpenRCT2-${GAME_VERSION}-linux-x86_64.tar.gz
-   rm -R ${SERVER_DIR}/OpenRCT2
-   touch ${SERVER_DIR}/openrct2installedv${GAME_VERSION}
-	if [ "$LAT_V" != "$CUR_V" ]; then
-		echo "-----------------------------------------"
-		echo "---Newer version of OpenRCT2 available---"
-        echo "---Installed version: $CUR_V ------------"
-        echo "---Available version: $LAT_V ------------"
-        echo "-----------------------------------------"
-    	sleep 5
-    fi
-elif [ "${GAME_VERSION}" == "$CUR_V" ]; then
-   echo "---OpenRCT2 version matches installed version---"
-   if [ "$LAT_V" != "$CUR_V" ]; then
-		echo "-----------------------------------------"
-		echo "---Newer version of OpenRCT2 available---"
-        echo "---Installed version: $CUR_V ------------"
-        echo "---Available version: $LAT_V ------------"
-        echo "-----------------------------------------"
-    	sleep 5
+        sleep 5
     fi
 else
-   echo "---Something went wrong, putting server in sleep mode---"
-   sleep infinity
+  if [ -z "$CUR_V" ]; then
+     echo "---OpenRCT2 not found!---"
+     cd ${SERVER_DIR}
+     curl -s https://api.github.com/repos/OpenRCT2/OpenRCT2/releases \
+     | grep "browser_download_url.*OpenRCT2-${GAME_VERSION}-linux-x86_64.tar.gz" \
+     | cut -d ":" -f 2,3 \
+     | cut -d '"' -f2 \
+     | wget -qi -
+      if [ ! -s ${SERVER_DIR}/OpenRCT2-${GAME_VERSION}-linux-x86_64.tar.gz ]; then
+          echo "---You've probably entered a wrong version number the server tar.gz is empty---"
+          rm OpenRCT2-${GAME_VERSION}-linux-x86_64.tar.gz
+          sleep infinity
+      fi
+     tar --directory ${SERVER_DIR} -xvzf /serverdata/serverfiles/OpenRCT2-${GAME_VERSION}-linux-x86_64.tar.gz
+     cd OpenRCT2
+     cp -R -f ${SERVER_DIR}/OpenRCT2/* ${SERVER_DIR}
+     cd ${SERVER_DIR}
+     rm ${SERVER_DIR}/OpenRCT2-${GAME_VERSION}-linux-x86_64.tar.gz
+     rm -R ${SERVER_DIR}/OpenRCT2
+     touch ${SERVER_DIR}/openrct2installedv${GAME_VERSION}
+      if [ "$LAT_V" != "$CUR_V" ]; then
+          echo "-----------------------------------------"
+          echo "---Newer version of OpenRCT2 available---"
+          echo "---Installed version: $CUR_V ------------"
+          echo "---Available version: $LAT_V ------------"
+          echo "-----------------------------------------"
+          sleep 5
+      fi
+  elif [ "${GAME_V}" != "$CUR_V" ]; then
+     echo "---Version missmatch, installing v${GAME_VERSION}!---"
+     rm ${SERVER_DIR}/openrct2installedv$CUR_V
+     cd ${SERVER_DIR}
+     curl -s https://api.github.com/repos/OpenRCT2/OpenRCT2/releases \
+     | grep "browser_download_url.*OpenRCT2-${GAME_VERSION}-linux-x86_64\.tar\.gz" \
+     | cut -d ":" -f 2,3 \
+     | cut -d '"' -f2 \
+     | wget -qi -
+      if [ ! -s ${SERVER_DIR}/OpenRCT2-${GAME_VERSION}-linux-x86_64.tar.gz ]; then
+          echo "---You've probably entered a wrong version number the server tar.gz is empty---"
+          rm OpenRCT2-${GAME_VERSION}-linux-x86_64.tar.gz
+          sleep infinity
+      fi
+     tar --directory ${SERVER_DIR} -xvzf /serverdata/serverfilesOpenRCT2-${GAME_VERSION}-linux-x86_64.tar.gz
+     cd OpenRCT2
+     cp -R -f ${SERVER_DIR}/OpenRCT2/* ${SERVER_DIR}
+     cd ${SERVER_DIR}
+     rm ${SERVER_DIR}/OpenRCT2-${GAME_VERSION}-linux-x86_64.tar.gz
+     rm -R ${SERVER_DIR}/OpenRCT2
+     touch ${SERVER_DIR}/openrct2installedv${GAME_VERSION}
+      if [ "$LAT_V" != "$CUR_V" ]; then
+          echo "-----------------------------------------"
+          echo "---Newer version of OpenRCT2 available---"
+          echo "---Installed version: $CUR_V ------------"
+          echo "---Available version: $LAT_V ------------"
+          echo "-----------------------------------------"
+          sleep 5
+      fi
+  elif [ "${GAME_VERSION}" == "$CUR_V" ]; then
+     echo "---OpenRCT2 version matches installed version---"
+     if [ "$LAT_V" != "$CUR_V" ]; then
+          echo "-----------------------------------------"
+          echo "---Newer version of OpenRCT2 available---"
+          echo "---Installed version: $CUR_V ------------"
+          echo "---Available version: $LAT_V ------------"
+          echo "-----------------------------------------"
+          sleep 5
+      fi
+  else
+     echo "---Something went wrong, putting server in sleep mode---"
+     sleep infinity
+  fi
 fi
 
 echo "---Preparing Server---"
