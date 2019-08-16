@@ -18,7 +18,7 @@ Update Notice: If you want to update or downgrade the game simply change the ver
 | GAME_PORT | Port the server will be running on | 11753 |
 
 
-# Run example
+## Run example
 
 docker run --name OpenRCT2 -d \
     -p 11753:11753/tcp \
