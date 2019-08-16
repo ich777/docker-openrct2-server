@@ -20,6 +20,7 @@ Update Notice: If you want to update or downgrade the game simply change the ver
 
 ## Run example
 
+```
 docker run --name OpenRCT2 -d \
     -p 11753:11753/tcp \
     --env 'GAME_CONFIG=--password Docker' \
@@ -30,6 +31,7 @@ docker run --name OpenRCT2 -d \
     --volume /mnt/user/appdata/openrct2:/serverdata/serverfiles \
     --restart=unless-stopped \
     ich777/openrct2server:latest
+```
 
 This Docker was mainly created for the use with Unraid, if you don’t use Unraid you should definitely try it!
 
