@@ -9,7 +9,7 @@ Update Notice: If you want to update or downgrade the game simply change the ver
 
 | Name | Value | Example |
 | --- | --- | --- |
-| SERVER_DIR | Folder for gamefile | /serverdata/serverfiles |
+| SERVER_DIR | Folder for gamefiles | /serverdata/serverfiles |
 | GAME_CONFIG | Commandline startup parameters | --password Docker |
 | GAME_VERSION | Preferred game version | 0.2.2 |
 | GAME_SAVE_NAME | Savegame to laod | docker.sv6 |
