@@ -50,7 +50,7 @@ else
           echo "-----------------------------------------"
           sleep 5
       fi
-  elif [ "${GAME_V}" != "$CUR_V" ]; then
+  elif [ "${GAME_VERSION}" != "$CUR_V" ]; then
      echo "---Version missmatch, installing v${GAME_VERSION}!---"
      rm ${SERVER_DIR}/openrct2installedv$CUR_V
      cd ${SERVER_DIR}
