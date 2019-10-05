@@ -2,7 +2,7 @@
 
 This Docker will download and install the preferred version of OpenRCT2.
 
-*** Manual Installation: You can also drop a custom version (even a develop version) into the root of the server and restart the Docker, it will automaticaly install it (don' forget to set the variable 'GAME_VERSION' to that version that you are installing - install a manual version by like a develop version be sure that it is in this format: 'v0.2.3-develop-e4a2b1f9c' if the source file is named like this: 'OpenRCT2-0.2.3-develop-e4a2b1f9c-linux-x86_64.tar', start the container and wait for it to create the directory's and place the downloaded fily manually into it, eventually restart the docker).
+*** Manual Installation: You can also drop a custom version (even a develop version) into the root of the server and restart the Docker, it will automaticaly install it (don' forget to set the variable 'GAME_VERSION' to that version that you are installing - installing a develop version is also possible but you must download and place the file manually be sure that it is in this format: 'v0.2.3-develop-e4a2b1f9c' if the source file is named like this: 'OpenRCT2-0.2.3-develop-e4a2b1f9c-linux-x86_64.tar', start the container and wait for it to create the directory's and place the downloaded fily manually into it, eventually restart the docker).
 Update Notice: If you want to update or downgrade the game simply change the version number.
 
 ## Env params
