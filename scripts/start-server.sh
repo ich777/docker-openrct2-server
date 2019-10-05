@@ -137,8 +137,8 @@ fi
 if grep -rq 'Welcome to OpenRCT2 v' ${SERVER_DIR}/user-data/config.ini; then
 	sed -i '/Welcome to OpenRCT2 v/c\server_greeting = "Welcome to OpenRCT2 v'"${GAME_VERSION}"'"' ${SERVER_DIR}/user-data/config.ini
 fi
-if grep -rq 'pause_server_if_no_clients = "template_server_description"' ${SERVER_DIR}/user-data/config.ini; then
-	sed -i '/pause_server_if_no_clients = "template_server_description"/c\pause_server_if_no_clients = "true"' ${SERVER_DIR}/user-data/config.ini
+if grep -rq 'pause_server_if_no_clients = template_pause_server' ${SERVER_DIR}/user-data/config.ini; then
+	sed -i '/pause_server_if_no_clients = template_pause_server/c\pause_server_if_no_clients = true' ${SERVER_DIR}/user-data/config.ini
 fi
 
 https://raw.githubusercontent.com/ich777/docker-openrct2-server/master/config/groups.json
