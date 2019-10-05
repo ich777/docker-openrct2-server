@@ -110,6 +110,36 @@ if [ ! -f ${SERVER_DIR}/user-data/groups.json ]; then
     cd ${SERVER_DIR}/user-data/
     wget -qi - https://raw.githubusercontent.com/ich777/docker-openrct2-server/master/config/groups.json
 fi
+if [ ! -f ${SERVER_DIR}/user-data/config.ini ]; then
+	echo "---No config.ini found, downloading---"
+    cd ${SERVER_DIR}/user-data/
+    wget -qi - https://raw.githubusercontent.com/ich777/docker-openrct2-server/master/config/groups.json
+fi
+echo "---Setting up config.ini---"
+if grep -rq 'player_name = "template_player_name"' ${SERVER_DIR}/user-data/config.ini; then
+	sed -i '/player_name = "template_player_name"/c\player_name = "server"' ${SERVER_DIR}/user-data/config.ini
+fi
+if grep -rq 'server_name = "template_server_name"' ${SERVER_DIR}/user-data/config.ini; then
+	sed -i '/server_name = "template_server_name"/c\server_name = "DockerServer v'"${GAME_VERSION}"'"' ${SERVER_DIR}/user-data/config.ini
+fi
+if grep -rq 'server_name = "DockerServer v' ${SERVER_DIR}/user-data/config.ini; then
+	sed -i '/server_name = "DockerServer v/c\server_name = "DockerServer v'"${GAME_VERSION}"'"' ${SERVER_DIR}/user-data/config.ini
+fi
+if grep -rq 'server_description = "template_server_description"' ${SERVER_DIR}/user-data/config.ini; then
+	sed -i '/server_description = "template_server_description"/c\server_description = "This is a basic OpenRCT2 v'"${GAME_VERSION}"' server running in a Docker container mainly created and optimized for Unraid"' ${SERVER_DIR}/user-data/config.ini
+fi
+if grep -rq 'This is a basic OpenRCT2 v' ${SERVER_DIR}/user-data/config.ini; then
+	sed -i '/This is a basic OpenRCT2 v/c\server_description = "This is a basic OpenRCT2 v'"${GAME_VERSION}"' server running in a Docker container mainly created and optimized for Unraid"' ${SERVER_DIR}/user-data/config.ini
+fi
+if grep -rq 'server_greeting = "template_server_description"' ${SERVER_DIR}/user-data/config.ini; then
+	sed -i '/server_greeting = "template_server_description"/c\server_greeting = "Welcome to OpenRCT2 v'"${GAME_VERSION}"'"' ${SERVER_DIR}/user-data/config.ini
+fi
+if grep -rq 'Welcome to OpenRCT2 v' ${SERVER_DIR}/user-data/config.ini; then
+	sed -i '/Welcome to OpenRCT2 v/c\server_greeting = "Welcome to OpenRCT2 v'"${GAME_VERSION}"'"' ${SERVER_DIR}/user-data/config.ini
+fi
+if grep -rq 'pause_server_if_no_clients = "template_server_description"' ${SERVER_DIR}/user-data/config.ini; then
+	sed -i '/pause_server_if_no_clients = "template_server_description"/c\pause_server_if_no_clients = "true"' ${SERVER_DIR}/user-data/config.ini
+fi
 
 https://raw.githubusercontent.com/ich777/docker-openrct2-server/master/config/groups.json
 
