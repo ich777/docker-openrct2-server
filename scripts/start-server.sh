@@ -113,7 +113,7 @@ fi
 if [ ! -f ${SERVER_DIR}/user-data/config.ini ]; then
 	echo "---No config.ini found, downloading---"
     cd ${SERVER_DIR}/user-data/
-    wget -qi - https://raw.githubusercontent.com/ich777/docker-openrct2-server/master/config/groups.json
+    wget -qi - https://raw.githubusercontent.com/ich777/docker-openrct2-server/master/config/config.ini
 fi
 echo "---Setting up config.ini---"
 if grep -rq 'player_name = "template_player_name"' ${SERVER_DIR}/user-data/config.ini; then
@@ -140,8 +140,21 @@ fi
 if grep -rq 'pause_server_if_no_clients = template_pause_server' ${SERVER_DIR}/user-data/config.ini; then
 	sed -i '/pause_server_if_no_clients = template_pause_server/c\pause_server_if_no_clients = true' ${SERVER_DIR}/user-data/config.ini
 fi
-
-https://raw.githubusercontent.com/ich777/docker-openrct2-server/master/config/groups.json
+if [ ! -f ${SERVER_DIR}/user-data/users.json ]; then
+	echo "---No users.json found, downloading---"
+    cd ${SERVER_DIR}/user-data/
+    wget -qi - https://raw.githubusercontent.com/ich777/docker-openrct2-server/master/config/users.json
+fi
+if [ "${ADMIN_HASH}" != "" ]; then
+    if grep -rq '"hash": "template_hash",' ${SERVER_DIR}/user-data/users.json; then
+        sed -i '/"hash": "template_hash",/c\\t\t"hash": "'"${ADMIN_HASH}"'",' ${SERVER_DIR}/user-data/users.json
+    fi
+fi
+if [ "${ADMIN_NAME}" != "" ]; then
+    if grep -rq '"name": "template_name",' ${SERVER_DIR}/user-data/users.json; then
+        sed -i '/"name": "template_name",/c\\t\t"name": "'"${ADMIN_NAME}"'",' ${SERVER_DIR}/user-data/users.json
+    fi
+fi
 
 chmod -R 770 ${DATA_DIR}
 
