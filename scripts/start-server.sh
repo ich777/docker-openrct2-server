@@ -99,6 +99,9 @@ echo "---Preparing Server---"
 if [ ! -d ${SERVER_DIR}/saves ]; then
 	mkdir ${SERVER_DIR}/saves
 fi
+if [ ! -d ${SERVER_DIR}/user-data ]; then
+	mkdir ${SERVER_DIR}/user-data
+fi
 SAVE_PRES="$(find ${SERVER_DIR}/saves -name *.sv6* | cut -d '/' -f5)"
 if [ -z "$SAVE_PRES" ]; then
 	echo "---No Savegame found, downloading---"
