@@ -13,9 +13,13 @@ Update Notice: If you want to update or downgrade the game simply change the ver
 | GAME_CONFIG | Commandline startup parameters | --password Docker |
 | GAME_VERSION | Preferred game version | 0.2.2 |
 | GAME_SAVE_NAME | Savegame to laod | docker.sv6 |
+| ADMIN_NAME | The username that should become an admin if he connects | user |
+| ADMIN_HASH | The hash of the admin user (you find it on the client computer in the user-data/keys folder - if nothing is in there try to connect and the game will create the hash, it's the numbers and letters after the username without '-' and the ending '.pubkey' or just turn on 'log_server_actions' in the 'config.ini' on the server and you'll find it in the logs | docker.sv6 |
 | UID | User Identifier | 99 |
 | GID | Group Identifier | 100 |
 | GAME_PORT | Port the server will be running on | 11753 |
+
+>**ATTENTION:** The variables ADMIN_NAME & ADMIN_HASH will only work on the first time you enter these, after that you must change it manually in '/SERVER_DIR/user-data/users.json'.
 
 
 ## Run example
