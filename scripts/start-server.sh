@@ -1,8 +1,8 @@
 #!/bin/bash
-CUR_V="$(find ${SERVER_DIR} -name openrct2installedv* | cut -d 'v' -f4)"
+CUR_V="$(find ${SERVER_DIR} -name openrct2installedv* | cut -d 'v' -f4-)"
 LAT_V="$(curl -s https://api.github.com/repos/OpenRCT2/OpenRCT2/releases/latest | grep tag_name | cut -d '"' -f4 | cut -d 'v' -f2)"
 MANUAL="$(find ${SERVER_DIR} -name OpenRCT*-linux-x86_64.tar.gz | cut -d '/' -f4)"
-MAN_V="$(find ${SERVER_DIR} -name OpenRCT*-linux-x86_64.tar.gz | cut -d '-' -f2)"
+MAN_V="$(find ${SERVER_DIR} -name OpenRCT*-linux-x86_64.tar.gz | cut -d '-' -f2- | sed 's/-linux-x86_64.tar.gz//g')"
 
 if [ ! -z $MANUAL ]; then
 	echo "---Manual placed OpenRCT2 file found, installing---"
@@ -105,6 +105,14 @@ if [ -z "$SAVE_PRES" ]; then
     cd ${SERVER_DIR}/saves
     wget -qi - https://raw.githubusercontent.com/ich777/docker-openrct2-server/master/saves/docker.sv6
 fi
+if [ ! -f ${SERVER_DIR}/user-data/groups.json ]; then
+	echo "---No groups.json found, downloading---"
+    cd ${SERVER_DIR}/user-data/
+    wget -qi - https://raw.githubusercontent.com/ich777/docker-openrct2-server/master/config/groups.json
+fi
+
+https://raw.githubusercontent.com/ich777/docker-openrct2-server/master/config/groups.json
+
 chmod -R 770 ${DATA_DIR}
 
 echo "---Starting Server---"
