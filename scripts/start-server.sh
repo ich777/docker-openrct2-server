@@ -3,6 +3,8 @@ CUR_V="$(find ${SERVER_DIR} -name openrct2installedv* | cut -d 'v' -f4-)"
 LAT_V="$(curl -s https://api.github.com/repos/OpenRCT2/OpenRCT2/releases/latest | grep tag_name | cut -d '"' -f4 | cut -d 'v' -f2)"
 MANUAL="$(find ${SERVER_DIR} -name OpenRCT*-linux-x86_64.tar.gz | cut -d '/' -f4)"
 MAN_V="$(find ${SERVER_DIR} -name OpenRCT*-linux-x86_64.tar.gz | cut -d '-' -f2- | sed 's/-linux-x86_64.tar.gz//g')"
+echo "---Setting umask to ${UMASK}---"
+umask ${UMASK}
 
 if [ ! -z $MANUAL ]; then
 	echo "---Manual placed OpenRCT2 file found, installing---"
