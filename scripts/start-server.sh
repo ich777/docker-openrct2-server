@@ -161,7 +161,7 @@ if [ "${ADMIN_NAME}" != "" ]; then
     fi
 fi
 
-chmod -R 770 ${DATA_DIR}
+chmod -R 777 ${DATA_DIR}
 
 echo "---Starting Server---"
 cd ${SERVER_DIR}
