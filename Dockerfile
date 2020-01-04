@@ -3,7 +3,7 @@ FROM ich777/debian-baseimage
 LABEL maintainer="admin@minenet.at"
 
 RUN apt-get update && \
-	apt-get -y install --no-install-recommends curl libjansson4 libzip4 libpng-tools libicu63 libfreetype6 libfontconfig libsdl2-2.0-0 libspeexdsp-dev && \
+	apt-get -y install --no-install-recommends curl libjansson4 libzip4 libpng-tools libicu-dev libfreetype6 libfontconfig libsdl2-2.0-0 libspeexdsp-dev && \
 	rm -rf /var/lib/apt/lists/*
 
 ENV DATA_DIR="/serverdata"
