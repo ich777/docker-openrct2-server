@@ -25,7 +25,7 @@ RUN mkdir $DATA_DIR && \
 	ulimit -n 2048
 
 ADD /scripts/ /opt/scripts/
-RUN chmod -R 770 /opt/scripts/ && ß
+RUN chmod -R 770 /opt/scripts/ && \
 	chown -R openrct2 /opt/scripts
 
 USER openrct2
