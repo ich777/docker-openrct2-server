@@ -25,6 +25,8 @@ RUN mkdir $DATA_DIR && \
 	ulimit -n 2048
 
 ADD /scripts/ /opt/scripts/
+COPY /libicudata.so.60 	/usr/lib/x86_64-linux-gnu/libicudata.so.60
+COPY /libicuuc.so.60 /usr/lib/x86_64-linux-gnu/ibicuuc.so.60
 RUN chmod -R 770 /opt/scripts/ && \
 	chown -R openrct2 /opt/scripts
 
