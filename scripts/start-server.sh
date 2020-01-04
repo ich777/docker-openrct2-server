@@ -106,19 +106,34 @@ if [ ! -d ${SERVER_DIR}/user-data ]; then
 fi
 SAVE_PRES="$(find ${SERVER_DIR}/saves -name *.sv6* | cut -d '/' -f5)"
 if [ -z "$SAVE_PRES" ]; then
-	echo "---No Savegame found, downloading---"
+	echo "---No savegame found, downloading---"
     cd ${SERVER_DIR}/saves
-    wget -qi - https://raw.githubusercontent.com/ich777/docker-openrct2-server/master/saves/docker.sv6
+    if wget -q -nc --show-progress --progress=bar:force:noscroll https://raw.githubusercontent.com/ich777/docker-openrct2-server/master/saves/docker.sv6 ; then
+    	echo "---Successfully downloaded savegame---"
+	else
+    	echo "---Can't download savegame putting server into sleep mode---"
+        sleep infinity
+	fi
 fi
 if [ ! -f ${SERVER_DIR}/user-data/groups.json ]; then
-	echo "---No groups.json found, downloading---"
+	echo "---No 'groups.json' found, downloading---"
     cd ${SERVER_DIR}/user-data/
-    wget -qi - https://raw.githubusercontent.com/ich777/docker-openrct2-server/master/config/groups.json
+    if wget -q -nc --show-progress --progress=bar:force:noscroll https://raw.githubusercontent.com/ich777/docker-openrct2-server/master/config/groups.json ; then
+    	echo "---Successfully downloaded 'groups.json'---"
+	else
+    	echo "---Can't download 'groups.json' putting server into sleep mode---"
+        sleep infinity
+	fi
 fi
 if [ ! -f ${SERVER_DIR}/user-data/config.ini ]; then
 	echo "---No config.ini found, downloading---"
     cd ${SERVER_DIR}/user-data/
-    wget -qi - https://raw.githubusercontent.com/ich777/docker-openrct2-server/master/config/config.ini
+    if wget -q -nc --show-progress --progress=bar:force:noscroll https://raw.githubusercontent.com/ich777/docker-openrct2-server/master/config/config.ini ; then
+    	echo "---Successfully downloaded 'config.ini'---"
+	else
+    	echo "---Can't download 'config.ini' putting server into sleep mode---"
+        sleep infinity
+	fi
 fi
 echo "---Setting up config.ini---"
 if grep -rq 'player_name = "template_player_name"' ${SERVER_DIR}/user-data/config.ini; then
@@ -148,7 +163,12 @@ fi
 if [ ! -f ${SERVER_DIR}/user-data/users.json ]; then
 	echo "---No users.json found, downloading---"
     cd ${SERVER_DIR}/user-data/
-    wget -qi - https://raw.githubusercontent.com/ich777/docker-openrct2-server/master/config/users.json
+    if wget -q -nc --show-progress --progress=bar:force:noscroll https://raw.githubusercontent.com/ich777/docker-openrct2-server/master/config/users.json ; then
+    	echo "---Successfully downloaded 'user.json'---"
+	else
+    	echo "---Can't download 'user.json' putting server into sleep mode---"
+        sleep infinity
+	fi
 fi
 if [ "${ADMIN_HASH}" != "" ]; then
     if grep -rq '"hash": "template_hash",' ${SERVER_DIR}/user-data/users.json; then
