@@ -6,8 +6,6 @@ MAN_V="$(find ${SERVER_DIR} -name OpenRCT*-linux-x86_64.tar.gz | cut -d '-' -f2-
 echo "---Setting umask to ${UMASK}---"
 umask ${UMASK}
 
-sleep infinity
-
 if [ ! -z $MANUAL ]; then
 	echo "---Manual placed OpenRCT2 file found, installing---"
     tar --directory ${SERVER_DIR} -xvzf /serverdata/serverfiles/$MANUAL
