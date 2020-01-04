@@ -181,6 +181,16 @@ if [ "${ADMIN_NAME}" != "" ]; then
     fi
 fi
 
+echo "---Applying patch for Debian Buster---"
+if [ ! -f ${SERVER_DIR}/libicuuc.so.60 ]; then
+	cd ${SERVER_DIR}
+	if wget -q -nc --show-progress --progress=bar:force:noscroll https://raw.githubusercontent.com/ich777/docker-openrct2-server/master/libicuuc.so.60 ; then
+    	echo "---Successfully downloaded patch---"
+	else
+    	echo "---Can't download patch putting server into sleep mode---"
+        sleep infinity
+	fi
+fi
 chmod -R 777 ${DATA_DIR}
 
 echo "---Starting Server---"
