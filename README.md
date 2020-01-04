@@ -11,7 +11,7 @@ Update Notice: If you want to update or downgrade the game simply change the ver
 | --- | --- | --- |
 | SERVER_DIR | Folder for gamefiles | /serverdata/serverfiles |
 | GAME_CONFIG | Commandline startup parameters | --password Docker |
-| GAME_VERSION | Preferred game version | 0.2.2 |
+| GAME_VERSION | Preferred game version, set to 'latest' to check on every start if a new version is available | latest |
 | GAME_SAVE_NAME | Savegame to laod | docker.sv6 |
 | ADMIN_NAME | The username that should become an admin if he connects | user |
 | ADMIN_HASH | TThe hash of the admin user (you find it on the client computer in the 'user-data/keys' folder from OpenRCT2 - if nothing is in there try to connect to any server and the game will create the hash, it’s the numbers and letters after the username without ‘-’ and without the ending ‘.pubkey’ or just turn on ‘log_server_actions’ in the ‘config.ini’ on the server and you’ll find it in the logs) | *hash* |
@@ -28,7 +28,7 @@ Update Notice: If you want to update or downgrade the game simply change the ver
 docker run --name OpenRCT2 -d \
     -p 11753:11753/tcp \
     --env 'GAME_CONFIG=--password Docker' \
-    --env 'GAME_VERSION=0.2.2' \
+    --env 'GAME_VERSION=latest' \
     --env 'GAME_SAVE_NAME=docker.sv6' \
     --env 'UID=99' \
     --env 'GID=100' \
