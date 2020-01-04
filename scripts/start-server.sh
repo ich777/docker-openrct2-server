@@ -18,6 +18,8 @@ if [ ! -z $MANUAL ]; then
     rm ${SERVER_DIR}/$MANUAL
     rm -R ${SERVER_DIR}/OpenRCT2
     touch ${SERVER_DIR}/openrct2installedv$MAN_V
+    CUR_V="$(find ${SERVER_DIR} -name openrct2installedv* | cut -d 'v' -f4-)"
+    sleep 2
     if [ "$LAT_V" != "$MAN_V" ]; then
         echo "-----------------------------------------"
         echo "---Newer version of OpenRCT2 available---"
@@ -47,6 +49,8 @@ else
      rm ${SERVER_DIR}/OpenRCT2-${GAME_VERSION}-linux-x86_64.tar.gz
      rm -R ${SERVER_DIR}/OpenRCT2
      touch ${SERVER_DIR}/openrct2installedv${GAME_VERSION}
+     CUR_V="$(find ${SERVER_DIR} -name openrct2installedv* | cut -d 'v' -f4-)"
+     sleep 2
       if [ "$LAT_V" != "$CUR_V" ]; then
           echo "-----------------------------------------"
           echo "---Newer version of OpenRCT2 available---"
@@ -76,6 +80,8 @@ else
      rm ${SERVER_DIR}/OpenRCT2-${GAME_VERSION}-linux-x86_64.tar.gz
      rm -R ${SERVER_DIR}/OpenRCT2
      touch ${SERVER_DIR}/openrct2installedv${GAME_VERSION}
+     CUR_V="$(find ${SERVER_DIR} -name openrct2installedv* | cut -d 'v' -f4-)"
+     sleep 2
       if [ "$LAT_V" != "$CUR_V" ]; then
           echo "-----------------------------------------"
           echo "---Newer version of OpenRCT2 available---"
