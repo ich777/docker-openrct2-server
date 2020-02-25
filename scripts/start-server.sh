@@ -6,8 +6,6 @@ MAN_V="$(find ${SERVER_DIR} -name OpenRCT*-linux-x86_64.tar.gz | cut -d '-' -f2-
 if [ "${GAME_VERSION}" == "latest" ]; then
 	GAME_VERSION=$LAT_V
 fi
-echo "---Setting umask to ${UMASK}---"
-umask ${UMASK}
 
 if [ ! -z $MANUAL ]; then
 	echo "---Manual placed OpenRCT2 file found, installing---"
@@ -200,7 +198,7 @@ if [ ! -f ${SERVER_DIR}/libicuuc.so.60 ]; then
         sleep infinity
 	fi
 fi
-chmod -R 777 ${DATA_DIR}
+chmod -R ${DATA_PERM} ${DATA_DIR}
 
 echo "---Starting Server---"
 cd ${SERVER_DIR}
