@@ -204,6 +204,7 @@ echo "---Starting Server---"
 cd ${SERVER_DIR}
 if [ "${LOAD_LAST_AUTOSAVE}" == "true" ]; then
     if [ -d ${SERVER_DIR}/user-data/saves/autosave ]; then
+        echo "---Loading last autosave file---"
         ${SERVER_DIR}/openrct2-cli host ${SERVER_DIR}/user-data/saves/autosave/"$(ls -l ${SERVER_DIR}/user-data/save/autosave/ | awk '{print $9}' | sort | tail -1)" --user-data-path=${SERVER_DIR}/user-data --port ${GAME_PORT} ${GAME_CONFIG}
     else
         echo "---No autosave found, loading save game: ${GAME_SAVE_NAME}---"
