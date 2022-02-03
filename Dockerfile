@@ -3,7 +3,7 @@ FROM ich777/debian-baseimage
 LABEL maintainer="admin@minenet.at"
 
 RUN apt-get update && \
-	apt-get -y install --no-install-recommends curl libjansson4 libzip4 libpng-tools libicu63 libfreetype6 libfontconfig libsdl2-2.0-0 libspeexdsp-dev libduktape203 && \
+	apt-get -y install --no-install-recommends curl libjansson4 libzip4 libpng-tools libicu67 libfreetype6 libfontconfig libsdl2-2.0-0 libspeexdsp-dev duktape && \
 	cd /usr/lib/x86_64-linux-gnu && \
 	ln -s libduktape.so.203 libduktape.so.202 && \
 	rm -rf /var/lib/apt/lists/*
