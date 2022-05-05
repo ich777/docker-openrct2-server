@@ -1,6 +1,7 @@
 FROM ich777/debian-baseimage
 
-LABEL maintainer="admin@minenet.at"
+LABEL org.opencontainers.image.authors="admin@minenet.at"
+LABEL org.opencontainers.image.source="https://github.com/ich777/docker-openrct2-server"
 
 RUN apt-get update && \
 	apt-get -y install --no-install-recommends curl libjansson4 libzip4 libpng-tools libicu67 libfreetype6 libfontconfig libsdl2-2.0-0 libspeexdsp-dev libduktape205 && \
