@@ -1,17 +1,15 @@
-FROM ich777/debian-baseimage:bookworm_amd64
+FROM ich777/debian-baseimage
 
 LABEL org.opencontainers.image.authors="admin@minenet.at"
 LABEL org.opencontainers.image.source="https://github.com/ich777/docker-openrct2-server"
 
 RUN apt-get update && \
-	apt-get -y install --no-install-recommends curl libjansson4 libzip4 libpng-tools libicu71 libfreetype6 libfontconfig libsdl2-2.0-0 libspeexdsp-dev libduktape207 && \
-	cd /usr/lib/x86_64-linux-gnu && \
-	ln -s libduktape.so.207 libduktape.so.202 && \
+	apt-get -y install --no-install-recommends curl && \
 	rm -rf /var/lib/apt/lists/*
 
 ENV DATA_DIR="/serverdata"
 ENV SERVER_DIR="${DATA_DIR}/serverfiles"
-ENV GAME_VERSION=0.2.2
+ENV GAME_VERSION=latest
 ENV GAME_CONFIG="template"
 ENV GAME_PORT=11753
 ENV GAME_SAVE_NAME="docker.sav"
@@ -31,7 +29,6 @@ RUN mkdir $DATA_DIR && \
 	ulimit -n 2048
 
 ADD /scripts/ /opt/scripts/
-COPY /libicudata.so.60 	/usr/lib/x86_64-linux-gnu/libicudata.so.60
 RUN chmod -R 770 /opt/scripts/
 
 #Server Start
