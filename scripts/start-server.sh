@@ -41,9 +41,10 @@ else
       rm -f ${SERVER_DIR}/OPENRCT2-v$LAT_V.AppImage
       sleep infinity
     fi
+    chmod +x ${SERVER_DIR}/OPENRCT2-v$LAT_V.AppImage
     ${SERVER_DIR}/OPENRCT2-v$LAT_V.AppImage --appimage-extract
     mv ${SERVER_DIR}/squashfs-root ${SERVER_DIR}/ORCT2
-    rm ${SERVER_DIR}/OPENRCT2-v$LAT_V.AppImage
+    rm -f ${SERVER_DIR}/OPENRCT2-v$LAT_V.AppImage
     touch ${SERVER_DIR}/openrct2installedv${GAME_VERSION}
     CUR_V="$(find ${SERVER_DIR} -name openrct2installedv* | cut -d 'v' -f4-)"
     sleep 2
@@ -57,7 +58,7 @@ else
     fi
   elif [ "${GAME_VERSION}" != "$CUR_V" ]; then
     echo "---Version missmatch, installing v${GAME_VERSION}!---"
-    rm ${SERVER_DIR}/openrct2installedv$CUR_V
+    rm -f ${SERVER_DIR}/openrct2installedv$GAME_VERSION
     cd ${SERVER_DIR}
     rm -rf ${SERVER_DIR}/ORCT2
     if wget -q -nc --show-progress --progress=bar:force:noscroll -O ${SERVER_DIR}/OPENRCT2-v$GAME_VERSION.AppImage https://github.com/OpenRCT2/OpenRCT2/releases/download/v${GAME_VERSION}/OpenRCT2-${GAME_VERSION}-linux-x86_64.AppImage ; then
@@ -67,8 +68,10 @@ else
       rm -f ${SERVER_DIR}/OPENRCT2-v$GAME_VERSION.AppImage
       sleep infinity
     fi
+    ${SERVER_DIR}/OPENRCT2-v$LAT_V.AppImage
     ${SERVER_DIR}/OPENRCT2-v$GAME_VERSION.AppImage --appimage-extract
     mv ${SERVER_DIR}/squashfs-root ${SERVER_DIR}/ORCT2
+    rm -f ${SERVER_DIR}/OPENRCT2-v$LAT_V.AppImage
     touch ${SERVER_DIR}/openrct2installedv${GAME_VERSION}
     CUR_V="$(find ${SERVER_DIR} -name openrct2installedv* | cut -d 'v' -f4-)"
     sleep 2
