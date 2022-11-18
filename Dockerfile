@@ -1,12 +1,12 @@
-FROM ich777/debian-baseimage
+FROM ich777/debian-baseimage:bookworm_amd64
 
 LABEL org.opencontainers.image.authors="admin@minenet.at"
 LABEL org.opencontainers.image.source="https://github.com/ich777/docker-openrct2-server"
 
 RUN apt-get update && \
-	apt-get -y install --no-install-recommends curl libjansson4 libzip4 libpng-tools libicu67 libfreetype6 libfontconfig libsdl2-2.0-0 libspeexdsp-dev libduktape205 && \
+	apt-get -y install --no-install-recommends curl libjansson4 libzip4 libpng-tools libicu71 libfreetype6 libfontconfig libsdl2-2.0-0 libspeexdsp-dev libduktape207 && \
 	cd /usr/lib/x86_64-linux-gnu && \
-	ln -s libduktape.so.205 libduktape.so.202 && \
+	ln -s libduktape.so.207 libduktape.so.202 && \
 	rm -rf /var/lib/apt/lists/*
 
 ENV DATA_DIR="/serverdata"
