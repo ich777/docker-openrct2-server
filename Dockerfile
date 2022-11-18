@@ -4,7 +4,7 @@ LABEL org.opencontainers.image.authors="admin@minenet.at"
 LABEL org.opencontainers.image.source="https://github.com/ich777/docker-openrct2-server"
 
 RUN apt-get update && \
-	apt-get -y install --no-install-recommends curl && \
+	apt-get -y install --no-install-recommends curl libfreetype6 fontconfig && \
 	rm -rf /var/lib/apt/lists/*
 
 ENV DATA_DIR="/serverdata"
