@@ -1,6 +1,6 @@
 #!/bin/bash
 CUR_V="$(find ${SERVER_DIR} -name openrct2installedv* | cut -d 'v' -f4-)"
-LAT_V="$(curl -s https://api.github.com/repos/OpenRCT2/OpenRCT2/releases/latest | grep tag_name | cut -d '"' -f4 | cut -d 'v' -f2)"
+LAT_V="$(curl -sL https://api.github.com/repos/OpenRCT2/OpenRCT2/releases/latest | grep tag_name | cut -d '"' -f4 | cut -d 'v' -f2)"
 MANUAL="$(find ${SERVER_DIR} -name OpenRCT*-linux-x86_64.AppImage | sort -V | tail -1 | cut -d '/' -f4)"
 MAN_V="$(find ${SERVER_DIR} -name OpenRCT*-linux-x86_64.AppImage | sort -V | tail -1 | cut -d '-' -f2- | sed 's/-linux-x86_64.AppImage//g')"
 if [ "${GAME_VERSION}" == "latest" ]; then
