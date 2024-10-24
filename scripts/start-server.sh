@@ -9,6 +9,11 @@ fi
 
 rm -rf ${SERVER_DIR}/data ${SERVER_DIR}/doc ${SERVER_DIR}/libicuuc.so.60 ${SERVER_DIR}/libopenrct2.so ${SERVER_DIR}/openrct2 ${SERVER_DIR}/openrct2-cli ${SERVER_DIR}/openrct2-cli
 
+if [ -d ${SERVER_DIR}/ORCT2/usr ]; then
+  rm -rf ${SERVER_DIR}/ORCT2 ${SERVER_DIR}/openrct2installedv*
+  CUR_V=""
+fi
+
 if [ ! -z $MANUAL ]; then
   echo "---Manual placed OpenRCT2 archive found, installing---"
   if [ -d ${SERVER_DIR}/ORCT2 ]; then
