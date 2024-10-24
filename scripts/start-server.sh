@@ -1,8 +1,8 @@
 #!/bin/bash
 CUR_V="$(find ${SERVER_DIR} -name openrct2installedv* | cut -d 'v' -f4-)"
-LAT_V="$(curl -sL https://api.github.com/repos/OpenRCT2/OpenRCT2/releases/latest | grep tag_name | cut -d '"' -f4 | cut -d 'v' -f2)"
-MANUAL="$(find ${SERVER_DIR} -name OpenRCT*-linux-x86_64.AppImage | sort -V | tail -1 | cut -d '/' -f4)"
-MAN_V="$(find ${SERVER_DIR} -name OpenRCT*-linux-x86_64.AppImage | sort -V | tail -1 | cut -d '-' -f2- | sed 's/-linux-x86_64.AppImage//g')"
+LAT_V="$(wget -qO- https://api.github.com/repos/OpenRCT2/OpenRCT2/releases/latest | grep tag_name | cut -d '"' -f4 | cut -d 'v' -f2)"
+MANUAL="$(find ${SERVER_DIR} -name OpenRCT*-Linux-bookworm-x86_64.tar.gz | sort -V | tail -1 | cut -d '/' -f4)"
+MAN_V="$(find ${SERVER_DIR} -name OpenRCT*-Linux-bookworm-x86_64.tar.gz | sort -V | tail -1 | cut -d '-' -f2- | sed 's/-Linux-bookworm-x86_64.tar.gz//g')"
 if [ "${GAME_VERSION}" == "latest" ]; then
 	GAME_VERSION=$LAT_V
 fi
@@ -10,16 +10,15 @@ fi
 rm -rf ${SERVER_DIR}/data ${SERVER_DIR}/doc ${SERVER_DIR}/libicuuc.so.60 ${SERVER_DIR}/libopenrct2.so ${SERVER_DIR}/openrct2 ${SERVER_DIR}/openrct2-cli ${SERVER_DIR}/openrct2-cli
 
 if [ ! -z $MANUAL ]; then
-  echo "---Manual placed OpenRCT2 AppImage found, installing---"
+  echo "---Manual placed OpenRCT2 archive found, installing---"
   if [ -d ${SERVER_DIR}/ORCT2 ]; then
     rm -rf ${SERVER_DIR}/ORCT2
   fi
   cd ${SERVER_DIR}
-  chmod +x ${SERVER_DIR}/${MANUAL}
-  ${SERVER_DIR}/${MANUAL} --appimage-extract
-  mv ${SERVER_DIR}/squashfs-root ${SERVER_DIR}/ORCT2
-  rm ${SERVER_DIR}/$MANUAL
-  touch ${SERVER_DIR}/openrct2installedv$MAN_V
+  mkdir -p ${SERVER_DIR}/ORCT2
+  tar -C ${SERVER_DIR}/ORCT2 --strip-components=1 -xvf ${SERVER_DIR}/OPENRCT2-v${MAN_V}.tar.gz
+  rm -f ${SERVER_DIR}/OPENRCT2-v${MAN_V}.tar.gz
+  touch ${SERVER_DIR}/openrct2installedv${MAN_V}
   CUR_V="$(find ${SERVER_DIR} -name openrct2installedv* | cut -d 'v' -f4-)"
   sleep 2
   if [ "$LAT_V" != "$MAN_V" ]; then
@@ -34,17 +33,16 @@ else
   if [ -z "$CUR_V" ]; then
     echo "---OpenRCT2 not found, downloading!---"
     cd ${SERVER_DIR}
-    if wget -q -nc --show-progress --progress=bar:force:noscroll -O ${SERVER_DIR}/OPENRCT2-v$LAT_V.AppImage https://github.com/OpenRCT2/OpenRCT2/releases/download/v${LAT_V}/OpenRCT2-${LAT_V}-linux-x86_64.AppImage ; then
+    if wget -q -nc --show-progress --progress=bar:force:noscroll -O ${SERVER_DIR}/OPENRCT2-v${LAT_V}.tar.gz https://github.com/OpenRCT2/OpenRCT2/releases/download/v${LAT_V}/OpenRCT2-${LAT_V}-Linux-bookworm-x86_64.tar.gz ; then
       echo "---Sucessfully downloaded OpenRCT2---"
     else
       echo "---Something went wrong, can't download OpenRCT2, putting container in sleep mode---"
-      rm -f ${SERVER_DIR}/OPENRCT2-v$LAT_V.AppImage
+      rm -f ${SERVER_DIR}/OPENRCT2-v${LAT_V}.tar.gz
       sleep infinity
     fi
-    chmod +x ${SERVER_DIR}/OPENRCT2-v$LAT_V.AppImage
-    ${SERVER_DIR}/OPENRCT2-v$LAT_V.AppImage --appimage-extract
-    mv ${SERVER_DIR}/squashfs-root ${SERVER_DIR}/ORCT2
-    rm -f ${SERVER_DIR}/OPENRCT2-v$LAT_V.AppImage
+    mkdir -p ${SERVER_DIR}/ORCT2
+    tar -C ${SERVER_DIR}/ORCT2 --strip-components=1 -xvf ${SERVER_DIR}/OPENRCT2-v${LAT_V}.tar.gz
+    rm -f ${SERVER_DIR}/OPENRCT2-v${LAT_V}.tar.gz
     touch ${SERVER_DIR}/openrct2installedv${GAME_VERSION}
     CUR_V="$(find ${SERVER_DIR} -name openrct2installedv* | cut -d 'v' -f4-)"
     sleep 2
@@ -61,17 +59,16 @@ else
     rm -f ${SERVER_DIR}/openrct2installedv$GAME_VERSION
     cd ${SERVER_DIR}
     rm -rf ${SERVER_DIR}/ORCT2
-    if wget -q -nc --show-progress --progress=bar:force:noscroll -O ${SERVER_DIR}/OPENRCT2-v$GAME_VERSION.AppImage https://github.com/OpenRCT2/OpenRCT2/releases/download/v${GAME_VERSION}/OpenRCT2-${GAME_VERSION}-linux-x86_64.AppImage ; then
+    if wget -q -nc --show-progress --progress=bar:force:noscroll -O ${SERVER_DIR}/OPENRCT2-v${LAT_V}.tar.gz https://github.com/OpenRCT2/OpenRCT2/releases/download/v${LAT_V}/OpenRCT2-${LAT_V}-Linux-bookworm-x86_64.tar.gz ; then
       echo "---Sucessfully downloaded OpenRCT2---"
     else
       echo "---Something went wrong, can't download OpenRCT2, putting container in sleep mode---"
-      rm -f ${SERVER_DIR}/OPENRCT2-v$GAME_VERSION.AppImage
+      rm -f ${SERVER_DIR}/OPENRCT2-v${LAT_V}.tar.gz
       sleep infinity
     fi
-    ${SERVER_DIR}/OPENRCT2-v$LAT_V.AppImage
-    ${SERVER_DIR}/OPENRCT2-v$GAME_VERSION.AppImage --appimage-extract
-    mv ${SERVER_DIR}/squashfs-root ${SERVER_DIR}/ORCT2
-    rm -f ${SERVER_DIR}/OPENRCT2-v$LAT_V.AppImage
+    mkdir -p ${SERVER_DIR}/ORCT2
+    tar -C ${SERVER_DIR}/ORCT2 --strip-components=1 -xvf ${SERVER_DIR}/OPENRCT2-v${LAT_V}.tar.gz
+    rm -f ${SERVER_DIR}/OPENRCT2-v${LAT_V}.tar.gz
     touch ${SERVER_DIR}/openrct2installedv${GAME_VERSION}
     CUR_V="$(find ${SERVER_DIR} -name openrct2installedv* | cut -d 'v' -f4-)"
     sleep 2
@@ -186,16 +183,15 @@ fi
 chmod -R ${DATA_PERM} ${DATA_DIR}
 
 echo "---Starting Server---"
-export LD_LIBRARY_PATH=${SERVER_DIR}/ORCT2/usr/lib
 cd ${SERVER_DIR}
 if [ "${LOAD_LAST_AUTOSAVE}" == "true" ]; then
   if [ -d ${SERVER_DIR}/user-data/save/autosave ]; then
     echo "---Loading last autosave file---"
-    ${SERVER_DIR}/ORCT2/usr/bin/openrct2-cli host ${SERVER_DIR}/user-data/save/autosave/"$(ls -l ${SERVER_DIR}/user-data/save/autosave/ | awk '{print $9}' | sort | tail -1)" --user-data-path=${SERVER_DIR}/user-data --port ${GAME_PORT} ${GAME_CONFIG}
+    ${SERVER_DIR}/ORCT2/openrct2-cli host ${SERVER_DIR}/user-data/save/autosave/"$(ls -l ${SERVER_DIR}/user-data/save/autosave/ | awk '{print $9}' | sort | tail -1)" --user-data-path=${SERVER_DIR}/user-data --port ${GAME_PORT} ${GAME_CONFIG}
   else
     echo "---No autosave found, loading save game: ${GAME_SAVE_NAME}---"
-    ${SERVER_DIR}/ORCT2/usr/bin/openrct2-cli host ${SERVER_DIR}/saves/${GAME_SAVE_NAME} --user-data-path=${SERVER_DIR}/user-data --port ${GAME_PORT} ${GAME_CONFIG}
+    ${SERVER_DIR}/ORCT2/openrct2-cli host ${SERVER_DIR}/saves/${GAME_SAVE_NAME} --user-data-path=${SERVER_DIR}/user-data --port ${GAME_PORT} ${GAME_CONFIG}
   fi
 else
-  ${SERVER_DIR}/ORCT2/usr/bin/openrct2-cli host ${SERVER_DIR}/saves/${GAME_SAVE_NAME} --user-data-path=${SERVER_DIR}/user-data --port ${GAME_PORT} ${GAME_CONFIG}
+  ${SERVER_DIR}/ORCT2/openrct2-cli host ${SERVER_DIR}/saves/${GAME_SAVE_NAME} --user-data-path=${SERVER_DIR}/user-data --port ${GAME_PORT} ${GAME_CONFIG}
 fi
