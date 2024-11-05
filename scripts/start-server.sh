@@ -38,7 +38,7 @@ else
   if [ -z "$CUR_V" ]; then
     echo "---OpenRCT2 not found, downloading!---"
     cd ${SERVER_DIR}
-    if wget -q -nc --show-progress --progress=bar:force:noscroll -O ${SERVER_DIR}/OPENRCT2-v${LAT_V}.tar.gz https://github.com/OpenRCT2/OpenRCT2/releases/download/v${LAT_V}/OpenRCT2-${LAT_V}-Linux-bookworm-x86_64.tar.gz ; then
+    if wget -q -nc --show-progress --progress=bar:force:noscroll -O ${SERVER_DIR}/OPENRCT2-v${LAT_V}.tar.gz https://github.com/OpenRCT2/OpenRCT2/releases/download/v${LAT_V}/OpenRCT2-v${LAT_V}-Linux-bookworm-x86_64.tar.gz ; then
       echo "---Sucessfully downloaded OpenRCT2---"
     else
       echo "---Something went wrong, can't download OpenRCT2, putting container in sleep mode---"
@@ -64,7 +64,7 @@ else
     rm -f ${SERVER_DIR}/openrct2installedv$GAME_VERSION
     cd ${SERVER_DIR}
     rm -rf ${SERVER_DIR}/ORCT2
-    if wget -q -nc --show-progress --progress=bar:force:noscroll -O ${SERVER_DIR}/OPENRCT2-v${LAT_V}.tar.gz https://github.com/OpenRCT2/OpenRCT2/releases/download/v${LAT_V}/OpenRCT2-${LAT_V}-Linux-bookworm-x86_64.tar.gz ; then
+    if wget -q -nc --show-progress --progress=bar:force:noscroll -O ${SERVER_DIR}/OPENRCT2-v${LAT_V}.tar.gz https://github.com/OpenRCT2/OpenRCT2/releases/download/v${LAT_V}/OpenRCT2-v${LAT_V}-Linux-bookworm-x86_64.tar.gz ; then
       echo "---Sucessfully downloaded OpenRCT2---"
     else
       echo "---Something went wrong, can't download OpenRCT2, putting container in sleep mode---"
